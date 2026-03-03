@@ -1,0 +1,261 @@
+---
+layout: default
+title: Projects
+description: Games, VR experiences, and technical builds by Alexander Vonderau
+---
+
+<div class="page-header">
+  <div class="container">
+    <p class="section-label">// quest log</p>
+    <h1 class="section-title">My <span class="accent">Projects</span></h1>
+    <p class="page-subtitle">Everything I've built, shipped, or am currently working on</p>
+  </div>
+</div>
+
+<section class="page-section" style="padding-top: 20px;">
+  <div class="container">
+
+    <!-- Active quest banner -->
+    <div class="quest-banner reveal">
+      <h3>▶ Active Quests</h3>
+      <p>
+        Currently developing a <strong>3D game in Godot</strong> (primary focus),
+        prototyping a <strong>2D project</strong>, and updating the
+        <strong>Wordle Labyrinth</strong> browser game.
+      </p>
+    </div>
+
+    <!-- Filter buttons (visual only for now — you can wire up JS later) -->
+    <div class="filter-bar reveal" style="margin-bottom: 32px;">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="vr">VR</button>
+      <button class="filter-btn" data-filter="game">Games</button>
+      <button class="filter-btn" data-filter="web">Web</button>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- ======================== -->
+      <!-- PROJECT: VR Game         -->
+      <!-- ======================== -->
+      <div class="project-card reveal" data-category="vr">
+        <div class="project-img">
+          <!-- PLACEHOLDER — Replace with your screenshot -->
+          <!-- <img src="{{ '/assets/images/project-vr-game.jpg' | relative_url }}" alt="VR Game"> -->
+          <span class="photo-placeholder">[ VR Game Screenshot ]<br>assets/images/project-vr-game.jpg</span>
+          <span class="project-status status-complete">Complete</span>
+        </div>
+        <div class="project-info">
+          <h3>VR Game</h3>
+          <p>
+            A virtual reality game built in Unity. Features interactive object
+            mechanics, 3D environments, and VR controller input handling.
+            Built as a college project under a tight deadline.
+          </p>
+          <div class="project-tags">
+            <span>Unity</span>
+            <span>C#</span>
+            <span>VR</span>
+            <span>College Project</span>
+          </div>
+          <div class="project-links">
+            <!-- Replace # with real links -->
+            <a href="#">itch.io ↗</a>
+            <a href="#">Video Demo ↗</a>
+            <a href="#">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- PROJECT: VR FL Experience -->
+      <!-- ======================== -->
+      <div class="project-card reveal" data-category="vr">
+        <div class="project-img">
+          <!-- <img src="{{ '/assets/images/project-vr-florida.jpg' | relative_url }}" alt="VR Florida"> -->
+          <span class="photo-placeholder">[ VR Florida Experience ]<br>assets/images/project-vr-florida.jpg</span>
+          <span class="project-status status-complete">Complete</span>
+        </div>
+        <div class="project-info">
+          <h3>VR Florida Experience</h3>
+          <p>
+            A virtual reality recreation of a real location in Florida.
+            Built as an immersive walkthrough experience in Unity,
+            focusing on environment design and spatial presence.
+          </p>
+          <div class="project-tags">
+            <span>Unity</span>
+            <span>VR</span>
+            <span>Environment Design</span>
+            <span>College Project</span>
+          </div>
+          <div class="project-links">
+            <a href="#">itch.io ↗</a>
+            <a href="#">Video Demo ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- PROJECT: Wordle Labyrinth -->
+      <!-- ======================== -->
+      <div class="project-card reveal" data-category="game web">
+        <div class="project-img">
+          <!-- <img src="{{ '/assets/images/project-labyrinth.jpg' | relative_url }}" alt="Wordle Labyrinth"> -->
+          <span class="photo-placeholder">[ Labyrinth Game Screenshot ]<br>assets/images/project-labyrinth.jpg</span>
+          <span class="project-status status-playable">Playable</span>
+        </div>
+        <div class="project-info">
+          <h3>Wordle Labyrinth</h3>
+          <p>
+            A puzzle game that blends Wordle-style word guessing with
+            maze navigation. Playable directly in the browser.
+            Currently being updated and polished.
+          </p>
+          <div class="project-tags">
+            <span>JavaScript</span>
+            <span>HTML5</span>
+            <span>CSS</span>
+            <span>Puzzle</span>
+          </div>
+          <div class="project-links">
+            <a href="{{ '/games/labyrinth/' | relative_url }}">Play Now ↗</a>
+            <a href="#">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- PROJECT: 3D Godot Game   -->
+      <!-- ======================== -->
+      <div class="project-card reveal" data-category="game">
+        <div class="project-img">
+          <!-- <img src="{{ '/assets/images/project-godot-3d.jpg' | relative_url }}" alt="3D Godot Game"> -->
+          <span class="photo-placeholder">[ 3D Godot Game ]<br>assets/images/project-godot-3d.jpg</span>
+          <span class="project-status status-progress">In Progress</span>
+        </div>
+        <div class="project-info">
+          <h3>3D Godot Game</h3>
+          <p>
+            Primary active project. A 3D game being developed in Godot Engine.
+            More details and screenshots coming as development progresses.
+          </p>
+          <div class="project-tags">
+            <span>Godot</span>
+            <span>GDScript</span>
+            <span>3D</span>
+          </div>
+          <div class="project-links">
+            <a href="#">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- PROJECT: 2D Godot Game   -->
+      <!-- ======================== -->
+      <div class="project-card reveal" data-category="game">
+        <div class="project-img">
+          <span class="photo-placeholder">[ 2D Godot Prototype ]<br>Concept phase</span>
+          <span class="project-status status-planned">Planned</span>
+        </div>
+        <div class="project-info">
+          <h3>2D Godot Prototype</h3>
+          <p>
+            Secondary project. A 2D game prototype in Godot, currently
+            in concept and early planning. Will begin active development after
+            the 3D project reaches a stable build.
+          </p>
+          <div class="project-tags">
+            <span>Godot</span>
+            <span>GDScript</span>
+            <span>2D</span>
+          </div>
+          <div class="project-links">
+            <a href="#">Coming Soon</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== -->
+      <!-- PROJECT: This Website    -->
+      <!-- ======================== -->
+      <div class="project-card reveal" data-category="web">
+        <div class="project-img">
+          <!-- <img src="{{ '/assets/images/project-portfolio.jpg' | relative_url }}" alt="Portfolio Site"> -->
+          <span class="photo-placeholder">[ Portfolio Screenshot ]<br>assets/images/project-portfolio.jpg</span>
+          <span class="project-status status-complete">Complete</span>
+        </div>
+        <div class="project-info">
+          <h3>Portfolio Website</h3>
+          <p>
+            This site! A multi-page portfolio built from scratch with HTML, CSS, and JavaScript.
+            Hosted on GitHub Pages with Jekyll templating. Features embedded playable games,
+            a game-inspired UI, and responsive design.
+          </p>
+          <div class="project-tags">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>Jekyll</span>
+          </div>
+          <div class="project-links">
+            <a href="#">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end projects-grid -->
+
+    <!-- ======================== -->
+    <!-- DOWNLOADS SECTION        -->
+    <!-- ======================== -->
+    <div style="margin-top: 80px;">
+      <p class="section-label reveal">// downloadable builds</p>
+      <h2 class="section-title reveal">Download <span class="accent">Demos</span></h2>
+      <p class="reveal" style="color: var(--text-dim); margin-bottom: 32px; max-width: 600px;">
+        Some projects are available as downloadable builds. VR projects require
+        a compatible headset. Desktop builds run on Windows.
+      </p>
+
+      <!-- Download: VR Game -->
+      <div class="download-card reveal">
+        <div class="dl-info">
+          <h4>VR Game — Unity Build</h4>
+          <p>Requires VR headset (Oculus/Meta Quest via Link, or SteamVR compatible)</p>
+        </div>
+        <div class="dl-meta">
+          <!-- Update size when you know it -->
+          <p>Windows · ~250 MB</p>
+        </div>
+        <!-- Replace # with actual download link (GitHub release, Google Drive, etc.) -->
+        <a href="#" class="btn btn-small btn-green">Download ↓</a>
+      </div>
+
+      <!-- Download: VR Florida -->
+      <div class="download-card reveal">
+        <div class="dl-info">
+          <h4>VR Florida Experience — Unity Build</h4>
+          <p>Requires VR headset · Immersive walkthrough experience</p>
+        </div>
+        <div class="dl-meta">
+          <p>Windows · ~200 MB</p>
+        </div>
+        <a href="#" class="btn btn-small btn-green">Download ↓</a>
+      </div>
+
+      <!-- Download: 3D Godot (when ready) -->
+      <div class="download-card reveal" style="opacity: 0.5; pointer-events: none;">
+        <div class="dl-info">
+          <h4>3D Godot Game — Early Build</h4>
+          <p>Not yet available — will be posted when a playable demo is ready</p>
+        </div>
+        <div class="dl-meta">
+          <p>Coming Soon</p>
+        </div>
+        <span class="btn btn-small" style="opacity: .4;">Unavailable</span>
+      </div>
+    </div>
+
+  </div><!-- end container -->
+</section>

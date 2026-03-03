@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Jekyll
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (if you ever add build tools)
+node_modules/

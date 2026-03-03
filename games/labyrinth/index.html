@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wordle Labyrinth</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="game-header">
+    <h1 class="game-title">The Labyrinth</h1>
+    <p class="game-subtitle">Navigate the Maze · Escape the Dark</p>
+    <p class="game-date" id="dateDisplay"></p>
+  </div>
+
+  <!-- HUD -->
+  <div class="game-hud">
+    <div class="hud-item">
+      <span class="hud-label">Steps</span>
+      <span class="hud-value" id="hud-steps">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Turns</span>
+      <span class="hud-value" id="hud-turns">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Time</span>
+      <span class="hud-value" id="hud-time">0:00</span>
+    </div>
+  </div>
+
+  <!-- Maze Canvas -->
+  <div class="canvas-wrapper">
+    <div class="canvas-frame">
+      <canvas id="mazeCanvas" width="500" height="500"></canvas>
+    </div>
+  </div>
+
+  <!-- Info / Win Message -->
+  <div id="info"></div>
+
+  <!-- Controls -->
+  <div class="controls-section">
+    <div class="controls-hint">
+      <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> to move
+    </div>
+
+    <label class="option-toggle">
+      <input type="checkbox" id="revealExit" />
+      Reveal Exit
+    </label>
+  </div>
+
+  <!-- Mobile D-Pad -->
+  <div class="mobile-controls" id="mobileControls">
+    <div class="dpad">
+      <button class="dpad-btn up" data-dir="N">▲</button>
+      <button class="dpad-btn left" data-dir="W">◄</button>
+      <div class="dpad-center">✦</div>
+      <button class="dpad-btn right" data-dir="E">►</button>
+      <button class="dpad-btn down" data-dir="S">▼</button>
+    </div>
+  </div>
+
+  <!-- Leaderboard (local) -->
+  <div id="leaderboard"></div>
+
+  <!-- Footer -->
+  <div class="game-footer">
+    <p>A daily maze — same seed for everyone, resets at midnight.</p>
+    <p style="margin-top: 8px;">
+      <a href="../../">← Back to Portfolio</a>
+    </p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

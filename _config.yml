@@ -1,0 +1,18 @@
+title: Alexander Vonderau
+description: IT Graduate | Game Developer | Technical Builder
+url: "https://yourusername.github.io"
+baseurl: ""  # Leave empty if repo is yourusername.github.io
+             # Set to "/repo-name" if it's a project repo
+
+# Lets us use {{ site.links.github }} etc.
+links:
+  github: "https://github.com/yourusername"
+  linkedin: "https://linkedin.com/in/yourusername"
+  itch: "https://yourname.itch.io"
+  email: "your.email@example.com"
+
+# Exclude dev files from build
+exclude:
+  - README.md
+  - LICENSE
+  - .gitignore

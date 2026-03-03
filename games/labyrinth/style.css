@@ -1,0 +1,542 @@
+/* ============================================
+   WORDLE LABYRINTH — RUSTIC THEME
+   Overgrown brick, moss, ancient stone
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=IM+Fell+English+SC&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --stone-dark:    #1a1a14;
+  --stone-mid:     #2a2a1e;
+  --stone-light:   #3d3a2e;
+  --brick:         #6b3a2a;
+  --brick-light:   #8b5a3a;
+  --brick-dark:    #4a2518;
+  --moss:          #3a6b35;
+  --moss-light:    #5a9b45;
+  --moss-dim:      rgba(58,107,53,.25);
+  --moss-glow:     rgba(90,155,69,.3);
+  --vine:          #2d5a28;
+  --gold:          #c8a84e;
+  --gold-dim:      rgba(200,168,78,.2);
+  --gold-glow:     rgba(200,168,78,.4);
+  --parchment:     #d4c5a0;
+  --parchment-dim: #a89b78;
+  --text:          #c8c0a8;
+  --text-dim:      #8a8068;
+  --exit-cyan:     #4ecdc4;
+  --exit-glow:     rgba(78,205,196,.35);
+  --danger:        #c0392b;
+  --font-title:    'MedievalSharp', cursive;
+  --font-heading:  'IM Fell English SC', serif;
+  --font-mono:     'Share Tech Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--stone-dark);
+  color: var(--text);
+  font-family: var(--font-mono);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   STONE TEXTURE BACKGROUND
+   ============================================ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    /* Subtle brick pattern */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 48px,
+      rgba(107,58,42,.06) 48px,
+      rgba(107,58,42,.06) 50px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 98px,
+      rgba(107,58,42,.04) 98px,
+      rgba(107,58,42,.04) 100px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Moss vignette corners */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at top left, var(--moss-dim), transparent 40%),
+    radial-gradient(ellipse at bottom right, var(--moss-dim), transparent 40%),
+    radial-gradient(ellipse at bottom left, rgba(45,90,40,.1), transparent 30%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * { position: relative; z-index: 1; }
+
+/* ============================================
+   HEADER
+   ============================================ */
+.game-header {
+  text-align: center;
+  padding: 24px 20px 8px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.game-title {
+  font-family: var(--font-title);
+  font-size: clamp(28px, 5vw, 42px);
+  color: var(--gold);
+  text-shadow:
+    0 0 20px var(--gold-glow),
+    0 2px 4px rgba(0,0,0,.6);
+  margin-bottom: 4px;
+  letter-spacing: 2px;
+}
+
+.game-subtitle {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  color: var(--parchment-dim);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.game-date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--moss-light);
+  margin-top: 6px;
+}
+
+/* ============================================
+   HUD BAR
+   ============================================ */
+.game-hud {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+
+.hud-item {
+  background: var(--stone-mid);
+  border: 1px solid rgba(107,58,42,.3);
+  padding: 10px 20px;
+  text-align: center;
+  position: relative;
+  min-width: 100px;
+}
+
+/* Moss accent on top of HUD cards */
+.hud-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--moss), var(--moss-light), var(--moss));
+}
+
+.hud-label {
+  font-family: var(--font-heading);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.hud-value {
+  font-family: var(--font-title);
+  font-size: 22px;
+  color: var(--gold);
+  text-shadow: 0 0 8px var(--gold-dim);
+}
+
+/* ============================================
+   CANVAS WRAPPER
+   ============================================ */
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  padding: 0 20px;
+}
+
+/* Decorative stone frame around canvas */
+.canvas-frame {
+  position: relative;
+  border: 3px solid var(--brick);
+  box-shadow:
+    inset 0 0 20px rgba(0,0,0,.5),
+    0 0 30px rgba(107,58,42,.2),
+    0 0 60px rgba(58,107,53,.1);
+  background: var(--stone-dark);
+}
+
+/* Corner moss decorations */
+.canvas-frame::before,
+.canvas-frame::after {
+  content: '❧';
+  position: absolute;
+  font-size: 20px;
+  color: var(--moss);
+  opacity: .5;
+  z-index: 2;
+  pointer-events: none;
+}
+.canvas-frame::before {
+  top: -12px; left: 8px;
+}
+.canvas-frame::after {
+  bottom: -12px; right: 8px;
+  transform: rotate(180deg);
+}
+
+#mazeCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* ============================================
+   INFO / WIN MESSAGE
+   ============================================ */
+#info {
+  width: 100%;
+  max-width: 700px;
+  padding: 0 20px;
+  margin-top: 12px;
+  min-height: 28px;
+  text-align: center;
+}
+
+#info:empty { display: none; }
+
+.info-message {
+  font-family: var(--font-title);
+  font-size: 18px;
+  padding: 16px 24px;
+  background: var(--stone-mid);
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  text-shadow: 0 0 10px var(--gold-glow);
+  text-align: center;
+}
+
+.info-message.victory {
+  border-color: var(--moss-light);
+  background: linear-gradient(135deg, var(--stone-mid), rgba(58,107,53,.15));
+  animation: victoryPulse 2s ease-in-out infinite;
+}
+
+@keyframes victoryPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--moss-dim); }
+  50%      { box-shadow: 0 0 25px var(--moss-glow), 0 0 50px rgba(58,107,53,.1); }
+}
+
+/* ============================================
+   CONTROLS SECTION
+   ============================================ */
+.controls-section {
+  width: 100%;
+  max-width: 700px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.controls-hint {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.controls-hint kbd {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--stone-mid);
+  border: 1px solid var(--brick);
+  border-bottom: 2px solid var(--brick-dark);
+  color: var(--parchment);
+  padding: 2px 8px;
+  min-width: 28px;
+  text-align: center;
+  border-radius: 2px;
+}
+
+/* Checkbox styling */
+.option-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.option-toggle input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--stone-mid);
+  border: 1px solid var(--brick);
+  cursor: pointer;
+  position: relative;
+}
+
+.option-toggle input[type="checkbox"]:checked {
+  background: var(--moss);
+  border-color: var(--moss-light);
+}
+
+.option-toggle input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #fff;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.stone-btn {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border: 1px solid var(--brick);
+  background: linear-gradient(180deg, var(--stone-light), var(--stone-mid));
+  color: var(--parchment);
+  cursor: pointer;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.stone-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(200,168,78,.1), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.stone-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 15px var(--gold-dim);
+}
+
+.stone-btn:hover::before { opacity: 1; }
+
+.stone-btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.stone-btn.danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.stone-btn.danger:hover {
+  border-color: var(--danger);
+  box-shadow: 0 0 15px rgba(192,57,43,.2);
+}
+
+/* ============================================
+   LEADERBOARD (local)
+   ============================================ */
+#leaderboard {
+  width: 100%;
+  max-width: 700px;
+  padding: 0 20px;
+  margin-top: 8px;
+}
+
+#leaderboard:empty { display: none; }
+
+.leaderboard-box {
+  background: var(--stone-mid);
+  border: 1px solid rgba(107,58,42,.3);
+  padding: 20px 24px;
+}
+
+.leaderboard-box h2 {
+  font-family: var(--font-title);
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 16px;
+  text-align: center;
+  text-shadow: 0 0 10px var(--gold-dim);
+}
+
+.leaderboard-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(107,58,42,.15);
+  font-size: 14px;
+}
+
+.leaderboard-entry:last-child { border-bottom: none; }
+
+.leaderboard-rank {
+  font-family: var(--font-title);
+  font-size: 18px;
+  color: var(--gold);
+  min-width: 30px;
+}
+
+.leaderboard-rank.first { color: var(--gold); }
+.leaderboard-rank.second { color: #aaa; }
+.leaderboard-rank.third { color: #cd7f32; }
+
+.leaderboard-stats {
+  color: var(--parchment-dim);
+}
+
+.leaderboard-stats span {
+  color: var(--moss-light);
+}
+
+/* ============================================
+   FOOTER AREA
+   ============================================ */
+.game-footer {
+  width: 100%;
+  max-width: 700px;
+  padding: 24px 20px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: auto;
+}
+
+.game-footer a {
+  color: var(--moss-light);
+  text-decoration: none;
+  transition: color .3s;
+}
+
+.game-footer a:hover { color: var(--gold); }
+
+/* ============================================
+   MOBILE CONTROLS (touch d-pad)
+   ============================================ */
+.mobile-controls {
+  display: none;
+  width: 100%;
+  max-width: 700px;
+  padding: 16px 20px;
+  justify-content: center;
+}
+
+.dpad {
+  display: grid;
+  grid-template-areas:
+    ".  up  ."
+    "left center right"
+    ".  down .";
+  grid-template-columns: 56px 56px 56px;
+  grid-template-rows: 56px 56px 56px;
+  gap: 4px;
+}
+
+.dpad-btn {
+  background: var(--stone-mid);
+  border: 1px solid var(--brick);
+  color: var(--parchment);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background .15s;
+}
+
+.dpad-btn:active {
+  background: var(--brick-dark);
+}
+
+.dpad-btn.up    { grid-area: up; }
+.dpad-btn.down  { grid-area: down; }
+.dpad-btn.left  { grid-area: left; }
+.dpad-btn.right { grid-area: right; }
+
+.dpad-center {
+  grid-area: center;
+  background: var(--stone-dark);
+  border: 1px solid var(--brick-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+/* Show on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .mobile-controls { display: flex; }
+}
+
+/* Also allow a manual toggle */
+.mobile-controls.force-show { display: flex; }
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--stone-dark); }
+::-webkit-scrollbar-thumb {
+  background: var(--brick);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--brick-light); }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 500px) {
+  .game-hud { gap: 8px; }
+  .hud-item { min-width: 80px; padding: 8px 12px; }
+  .hud-value { font-size: 18px; }
+  .controls-section { gap: 12px; }
+}

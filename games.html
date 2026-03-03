@@ -1,0 +1,169 @@
+---
+layout: default
+title: Games
+description: Play browser games built by Alexander Vonderau
+---
+
+<div class="page-header">
+  <div class="container">
+    <p class="section-label">// arcade</p>
+    <h1 class="section-title">Playable <span class="accent">Games</span></h1>
+    <p class="page-subtitle">Browser-playable demos — no downloads required</p>
+  </div>
+</div>
+
+<section class="page-section" style="padding-top: 20px;">
+  <div class="container">
+
+    <!-- ================================ -->
+    <!-- GAME 1: Wordle Labyrinth (embed) -->
+    <!-- ================================ -->
+    <div class="game-embed-container reveal">
+      <div class="game-embed-header">
+        <div>
+          <h3>Wordle Labyrinth</h3>
+          <p style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin-top: 4px;">
+            Puzzle · Word Game · Maze
+          </p>
+        </div>
+        <div class="game-controls">
+          <button class="btn btn-small" onclick="toggleFullscreen('labyrinth-frame')">⛶ Fullscreen</button>
+          <a href="{{ '/games/labyrinth/' | relative_url }}" target="_blank" class="btn btn-small btn-secondary">
+            Open in New Tab ↗
+          </a>
+        </div>
+      </div>
+
+      <!--
+        This iframe loads your labyrinth game from the /games/labyrinth/ folder.
+        The game needs its own index.html inside that folder (see below).
+      -->
+      <iframe
+        id="labyrinth-frame"
+        class="game-embed-frame"
+        src="{{ '/games/labyrinth/' | relative_url }}"
+        title="Wordle Labyrinth Game"
+        loading="lazy"
+        allow="fullscreen"
+      ></iframe>
+
+      <div class="game-embed-info">
+        <p><strong>How to play:</strong></p>
+        <p style="margin-top: 8px;">
+          <!-- UPDATE THESE CONTROLS to match your actual game -->
+          Use <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> or
+          <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> to navigate the maze.
+          Type letters to guess the word. Colors indicate correctness like Wordle.
+          Find your way through the labyrinth while solving the puzzle.
+        </p>
+        <p style="margin-top: 12px; font-size: 12px; color: var(--text-dim);">
+          Built with vanilla JavaScript and HTML5 Canvas.
+          <a href="#" style="color: var(--accent);">View source on GitHub ↗</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- ================================ -->
+    <!-- GAME 2: Placeholder for future   -->
+    <!-- ================================ -->
+    <div class="game-embed-container reveal" style="margin-top: 48px;">
+      <div class="game-embed-header">
+        <div>
+          <h3>3D Godot Game — Web Demo</h3>
+          <p style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin-top: 4px;">
+            Coming Soon · 3D · Godot Export
+          </p>
+        </div>
+        <div class="game-controls">
+          <span class="btn btn-small" style="opacity: .4; pointer-events: none;">Not Yet Available</span>
+        </div>
+      </div>
+
+      <div style="
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: var(--bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 16px;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      ">
+        <span style="font-family: var(--font-game); font-size: 10px; color: var(--text-dim);">
+          // LOADING QUEST...
+        </span>
+        <span style="font-family: var(--font-mono); font-size: 13px; color: var(--orange);">
+          This game is still in development.
+        </span>
+        <span style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);">
+          A playable web export will appear here when ready.
+        </span>
+      </div>
+
+      <div class="game-embed-info">
+        <p style="color: var(--text-dim);">
+          Godot Engine can export games to HTML5/WebGL, which means you'll be able to
+          play directly in the browser. Check back for updates.
+        </p>
+      </div>
+    </div>
+
+    <!-- ================================ -->
+    <!-- HOW-TO: Adding more games        -->
+    <!-- ================================ -->
+    <!--
+      To add another playable game:
+
+      1. Create a new folder: /games/your-game-name/
+      2. Put index.html, game.js, style.css (and any assets) inside
+      3. Copy one of the game-embed-container blocks above
+      4. Update the iframe src to: /games/your-game-name/
+      5. Update title, controls, description
+
+      For Godot HTML5 exports:
+      1. Export your project as HTML5 in Godot
+      2. You'll get: index.html, game.js, game.wasm, game.pck
+      3. Put ALL those files in /games/your-godot-game/
+      4. Point the iframe at that folder
+      5. It works!
+    -->
+
+    <!-- ================================ -->
+    <!-- TIPS SECTION                     -->
+    <!-- ================================ -->
+    <div style="margin-top: 64px;">
+      <p class="section-label reveal">// tips</p>
+      <h2 class="section-title reveal">Game <span class="accent">Notes</span></h2>
+
+      <div class="reveal" style="
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      ">
+        <div class="card">
+          <h4 style="font-family: var(--font-game); font-size: 10px; color: var(--accent); margin-bottom: 12px; line-height: 1.8;">
+            🖥 Best Experience
+          </h4>
+          <p style="font-size: 14px; color: var(--text-dim);">
+            Browser games play best on desktop with a keyboard.
+            Mobile may work but isn't fully optimized.
+            Use Chrome or Firefox for best results.
+          </p>
+        </div>
+        <div class="card">
+          <h4 style="font-family: var(--font-game); font-size: 10px; color: var(--accent); margin-bottom: 12px; line-height: 1.8;">
+            🎮 VR Projects
+          </h4>
+          <p style="font-size: 14px; color: var(--text-dim);">
+            VR projects require downloading and a compatible headset.
+            Visit the <a href="{{ '/projects' | relative_url }}" style="color: var(--accent);">Projects page</a>
+            for download links and system requirements.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end container -->
+</section>

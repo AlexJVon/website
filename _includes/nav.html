@@ -1,0 +1,26 @@
+<nav>
+  <div class="nav-inner">
+    <a href="{{ '/' | relative_url }}" class="logo">&lt;AV /&gt;</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li>
+        <a href="{{ '/' | relative_url }}"
+           class="{% if page.url == '/' %}active{% endif %}">Home</a>
+      </li>
+      <li>
+        <a href="{{ '/about' | relative_url }}"
+           class="{% if page.url == '/about.html' or page.url == '/about' %}active{% endif %}">About</a>
+      </li>
+      <li>
+        <a href="{{ '/projects' | relative_url }}"
+           class="{% if page.url == '/projects.html' or page.url == '/projects' %}active{% endif %}">Projects</a>
+      </li>
+      <li>
+        <a href="{{ '/games' | relative_url }}"
+           class="{% if page.url == '/games.html' or page.url == '/games' %}active{% endif %}">Games</a>
+      </li>
+    </ul>
+  </div>
+</nav>
