@@ -97,25 +97,69 @@ description: Portfolio of Alexander Vonderau — IT Graduate, Game Developer, Te
 </section>
 
 <!-- Quick stats -->
+<!-- About snapshot + stats -->
 <section class="page-section">
   <div class="container">
-    <div class="stats-grid reveal">
-      <div class="stat-card">
-        <span class="stat-number">BS</span>
-        <span class="stat-label">IT Degree</span>
+    <p class="section-label reveal">// character stats</p>
+    <h2 class="section-title reveal">Quick <span class="accent">Profile</span></h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;" class="reveal">
+
+      <!-- Left: Bio snapshot -->
+      <div>
+        <p style="font-size: 17px; margin-bottom: 16px; color: var(--text);">
+          I'm an <span style="color: var(--accent); font-weight: 600;">IT graduate</span> from the
+          University of North Florida with a focus on building interactive systems —
+          from VR experiences to game prototypes to technical problem solving.
+        </p>
+        <p style="font-size: 16px; color: var(--text-dim); margin-bottom: 24px;">
+          I grew up hiking and working outdoors. I bring that same grit and adaptability
+          into technical work. Currently developing games in Godot and heading to
+          Yellowstone for summer 2025.
+        </p>
+        <div class="btn-group">
+          <a href="{{ '/about' | relative_url }}" class="btn btn-small">Full Profile →</a>
+          <a href="{{ '/projects' | relative_url }}" class="btn btn-small btn-secondary">View Projects →</a>
+        </div>
       </div>
-      <div class="stat-card">
-        <span class="stat-number">2+</span>
-        <span class="stat-label">VR Projects</span>
+
+      <!-- Right: Stats + Education -->
+      <div>
+        <!-- Degree cards -->
+        <div class="edu-cards" style="margin-bottom: 24px;">
+          <div class="edu-card">
+            <h4>B.S. Information Technology</h4>
+            <p class="edu-school">University of North Florida</p>
+            <p class="edu-date">Graduated December 2024</p>
+          </div>
+          <div class="edu-card">
+            <h4>Associate of Arts</h4>
+            <p class="edu-school">Dual Enrollment</p>
+            <p class="edu-date">Completed 2022</p>
+          </div>
+        </div>
+
+        <!-- Stat boxes -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-number">BS</span>
+            <span class="stat-label">IT Degree</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">2+</span>
+            <span class="stat-label">VR Projects</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">3+</span>
+            <span class="stat-label">Years Working</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">2</span>
+            <span class="stat-label">Game Engines</span>
+          </div>
+        </div>
       </div>
-      <div class="stat-card">
-        <span class="stat-number">3+</span>
-        <span class="stat-label">Years Working</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-number">2</span>
-        <span class="stat-label">Game Engines</span>
-      </div>
+
     </div>
   </div>
 </section>

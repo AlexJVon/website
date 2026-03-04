@@ -835,3 +835,19 @@ footer p {
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .photo-grid { grid-template-columns: 1fr; }
 }
+
+/* ============================================
+   PROFILE GRID (home page)
+   ============================================ */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
