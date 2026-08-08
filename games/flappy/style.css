@@ -202,7 +202,7 @@ body > * { position: relative; z-index: 1; }
   color: var(--neon-cyan);
   text-shadow: 0 0 8px var(--neon-cyan-dim);
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .info-message.gameover {
@@ -219,6 +219,41 @@ body > * { position: relative; z-index: 1; }
 @keyframes bestPulse {
   0%, 100% { box-shadow: 0 0 10px var(--bird-gold-glow); }
   50%      { box-shadow: 0 0 25px var(--bird-gold-glow); }
+}
+
+/* ============================================
+   NAME ENTRY FORM
+   ============================================ */
+.name-entry {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.name-entry input {
+  font-family: var(--font-title);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  background: var(--void-deep);
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  text-align: center;
+  width: 150px;
+  outline: none;
+}
+
+.name-entry input:focus {
+  box-shadow: 0 0 12px var(--neon-cyan-glow);
+  border-color: var(--neon-pink);
+}
+
+.name-entry input::placeholder {
+  color: var(--text-dim);
 }
 
 /* ============================================
@@ -304,7 +339,6 @@ body > * { position: relative; z-index: 1; }
 
 .leaderboard-entry {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 8px 0;
   border-bottom: 1px solid rgba(0,229,255,.1);
@@ -322,7 +356,20 @@ body > * { position: relative; z-index: 1; }
 .leaderboard-rank.second { color: #c8c8d8; }
 .leaderboard-rank.third  { color: #ff9a4d; }
 
-.leaderboard-stats { color: var(--text-dim); }
+.leaderboard-name {
+  flex: 1;
+  text-align: left;
+  padding: 0 10px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaderboard-stats { color: var(--text-dim); white-space: nowrap; }
 .leaderboard-stats span {
   color: var(--neon-pink);
   font-family: var(--font-title);
