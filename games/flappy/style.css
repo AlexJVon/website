@@ -1,0 +1,366 @@
+/* ============================================
+   NEON FLAP — SYNTHWAVE ARCADE THEME
+   Neon grid, glowing pipes, retro pixel font
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --void-deep:       #05050f;
+  --void-mid:        #0d0524;
+  --sun-glow-dim:    rgba(255,46,136,.25);
+  --neon-cyan:       #00e5ff;
+  --neon-cyan-dim:   rgba(0,229,255,.2);
+  --neon-cyan-glow:  rgba(0,229,255,.4);
+  --neon-pink:       #ff2e88;
+  --bird-gold:       #ffcc00;
+  --bird-gold-glow:  rgba(255,204,0,.5);
+  --text:            #d8d8e8;
+  --text-dim:        #8888a0;
+  --danger:          #ff3860;
+  --font-title:      'Press Start 2P', monospace;
+  --font-mono:       'Share Tech Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--void-deep);
+  color: var(--text);
+  font-family: var(--font-mono);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background grid + sun glow, matches the main site's grid motif */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at top, var(--sun-glow-dim), transparent 45%),
+    radial-gradient(ellipse at bottom, rgba(0,229,255,.08), transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * { position: relative; z-index: 1; }
+
+/* ============================================
+   HEADER
+   ============================================ */
+.game-header {
+  text-align: center;
+  padding: 24px 20px 8px;
+  width: 100%;
+  max-width: 460px;
+}
+
+.game-title {
+  font-family: var(--font-title);
+  font-size: clamp(20px, 6vw, 28px);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 12px var(--neon-cyan-glow), 0 0 30px var(--sun-glow-dim);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+.game-subtitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   HUD BAR
+   ============================================ */
+.game-hud {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+
+.hud-item {
+  background: var(--void-mid);
+  border: 1px solid rgba(0,229,255,.2);
+  padding: 10px 18px;
+  text-align: center;
+  position: relative;
+  min-width: 90px;
+}
+
+.hud-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-cyan));
+}
+
+.hud-label {
+  font-family: var(--font-title);
+  font-size: 8px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.hud-value {
+  font-family: var(--font-title);
+  font-size: 18px;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan-dim);
+}
+
+/* ============================================
+   CANVAS WRAPPER
+   ============================================ */
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 0 20px;
+}
+
+.canvas-frame {
+  position: relative;
+  border: 3px solid var(--neon-cyan);
+  box-shadow:
+    inset 0 0 20px rgba(0,0,0,.6),
+    0 0 20px var(--neon-cyan-dim),
+    0 0 50px var(--sun-glow-dim);
+  background: var(--void-deep);
+}
+
+.canvas-frame::before,
+.canvas-frame::after {
+  content: '◆';
+  position: absolute;
+  font-size: 14px;
+  color: var(--neon-pink);
+  opacity: .6;
+  z-index: 2;
+  pointer-events: none;
+}
+.canvas-frame::before { top: -10px; left: 8px; }
+.canvas-frame::after { bottom: -10px; right: 8px; }
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* ============================================
+   INFO / GAME OVER MESSAGE
+   ============================================ */
+#info {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px 20px 0;
+  margin-top: 16px;
+  text-align: center;
+}
+
+#info:empty { display: none; }
+
+.info-message {
+  font-family: var(--font-title);
+  font-size: 12px;
+  line-height: 1.8;
+  padding: 16px 20px;
+  background: var(--void-mid);
+  border: 1px solid var(--neon-cyan-dim);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan-dim);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.info-message.gameover {
+  border-color: var(--danger);
+  color: #ff8fa3;
+}
+
+.info-message.newbest {
+  border-color: var(--bird-gold);
+  color: var(--bird-gold);
+  animation: bestPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes bestPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--bird-gold-glow); }
+  50%      { box-shadow: 0 0 25px var(--bird-gold-glow); }
+}
+
+/* ============================================
+   CONTROLS SECTION
+   ============================================ */
+.controls-section {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.controls-hint {
+  font-size: 12px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.controls-hint kbd {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--void-mid);
+  border: 1px solid var(--neon-cyan-dim);
+  border-bottom: 2px solid var(--neon-cyan);
+  color: var(--text);
+  padding: 2px 8px;
+  min-width: 24px;
+  text-align: center;
+  border-radius: 2px;
+}
+
+/* ============================================
+   BUTTON
+   ============================================ */
+.neon-btn {
+  font-family: var(--font-title);
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 12px 26px;
+  border: 2px solid var(--neon-cyan);
+  background: var(--void-mid);
+  color: var(--neon-cyan);
+  cursor: pointer;
+  transition: all .3s;
+}
+.neon-btn:hover {
+  box-shadow: 0 0 15px var(--neon-cyan-glow);
+  color: #fff;
+}
+.neon-btn:active { transform: translateY(1px); }
+
+/* ============================================
+   LEADERBOARD (local)
+   ============================================ */
+#leaderboard {
+  width: 100%;
+  max-width: 420px;
+  padding: 0 20px;
+  margin-top: 8px;
+}
+
+#leaderboard:empty { display: none; }
+
+.leaderboard-box {
+  background: var(--void-mid);
+  border: 1px solid rgba(0,229,255,.2);
+  padding: 20px 22px;
+}
+
+.leaderboard-box h2 {
+  font-family: var(--font-title);
+  font-size: 14px;
+  color: var(--neon-cyan);
+  margin-bottom: 16px;
+  text-align: center;
+  text-shadow: 0 0 8px var(--neon-cyan-dim);
+}
+
+.leaderboard-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0,229,255,.1);
+  font-size: 13px;
+}
+.leaderboard-entry:last-child { border-bottom: none; }
+
+.leaderboard-rank {
+  font-family: var(--font-title);
+  font-size: 12px;
+  color: var(--neon-cyan);
+  min-width: 34px;
+}
+.leaderboard-rank.first  { color: var(--bird-gold); }
+.leaderboard-rank.second { color: #c8c8d8; }
+.leaderboard-rank.third  { color: #ff9a4d; }
+
+.leaderboard-stats { color: var(--text-dim); }
+.leaderboard-stats span {
+  color: var(--neon-pink);
+  font-family: var(--font-title);
+  font-size: 12px;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.game-footer {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px 20px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: auto;
+}
+.game-footer a {
+  color: var(--neon-cyan);
+  text-decoration: none;
+  transition: color .3s;
+}
+.game-footer a:hover { color: var(--neon-pink); }
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--void-deep); }
+::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--neon-pink); }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 480px) {
+  .game-hud { gap: 8px; }
+  .hud-item { min-width: 70px; padding: 8px 10px; }
+  .hud-value { font-size: 15px; }
+}
