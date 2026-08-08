@@ -15,6 +15,7 @@ const SPEED_MAX             = 4.8;
 const BIRD_X                = 90;
 const BIRD_RADIUS           = 14;
 const RESTART_COOLDOWN_MS   = 400;
+const MAX_NAME_LENGTH       = 10;
 
 // ================================================
 // CANVAS SETUP
@@ -30,6 +31,7 @@ const H = canvas.height;
 const STORAGE_BEST   = "flappy-best";
 const STORAGE_PLAYED = "flappy-gamesPlayed";
 const STORAGE_SCORES = "flappy-scores";
+const STORAGE_NAME   = "flappy-playerName";
 
 let best = parseInt(localStorage.getItem(STORAGE_BEST) || "0", 10);
 let gamesPlayed = parseInt(localStorage.getItem(STORAGE_PLAYED) || "0", 10);
@@ -46,7 +48,8 @@ let score = 0;
 let frame = 0;
 let groundOffset = 0;
 let shakeFrames = 0;
-let state = "ready"; // ready | playing | over
+let state = "ready";      // ready | playing | over
+let awaitingName = false; // true while the name-entry form is showing
 let lastRestartTime = 0;
 
 function resetGame() {
@@ -55,6 +58,7 @@ function resetGame() {
   score = 0;
   frame = 0;
   state = "ready";
+  awaitingName = false;
   document.getElementById("hud-score").textContent = "0";
   document.getElementById("info").innerHTML = "";
 }
@@ -295,6 +299,8 @@ function drawBird() {
 // GAME FLOW
 // ================================================
 function flap() {
+  if (awaitingName) return; // ignore taps/keys while the name form is up
+
   if (state === "ready") {
     startGame();
   } else if (state === "playing") {
@@ -330,23 +336,87 @@ function endGame() {
     document.getElementById("hud-best").textContent = best;
   }
 
-  saveScoreToLeaderboard(score);
+  if (qualifiesForLeaderboard(score)) {
+    showNameEntry(isNewBest);
+  } else {
+    showGameOverMessage(isNewBest);
+  }
+}
+
+// ================================================
+// NAME ENTRY
+// ================================================
+function qualifiesForLeaderboard(s) {
+  if (s <= 0) return false; // don't bother prompting for a zero-score run
+  let scores = JSON.parse(localStorage.getItem(STORAGE_SCORES) || "[]");
+  if (scores.length < 10) return true;
+  let lowest = scores[scores.length - 1].score;
+  return s >= lowest;
+}
+
+function showNameEntry(isNewBest) {
+  awaitingName = true;
+  let lastName = localStorage.getItem(STORAGE_NAME) || "";
+
+  let infoDiv = document.getElementById("info");
+  infoDiv.innerHTML =
+    '<div class="info-message ' + (isNewBest ? "newbest" : "gameover") + '">' +
+    (isNewBest ? "⭐ NEW BEST — " : "🏁 TOP 10 — ") +
+    "SCORE " + score +
+    "</div>" +
+    '<form class="name-entry" id="nameForm">' +
+      '<input type="text" id="nameInput" maxlength="' + MAX_NAME_LENGTH + '" ' +
+      'placeholder="YOUR NAME" autocomplete="off" spellcheck="false" value="' +
+      escapeHtml(lastName) + '" />' +
+      '<button type="submit" class="neon-btn">Save</button>' +
+    "</form>";
+
+  let input = document.getElementById("nameInput");
+  input.focus();
+  input.select();
+
+  document.getElementById("nameForm").addEventListener("submit", e => {
+    e.preventDefault();
+    submitName(isNewBest);
+  });
+}
+
+function submitName(isNewBest) {
+  let input = document.getElementById("nameInput");
+  let name = (input ? input.value : "").trim().toUpperCase().slice(0, MAX_NAME_LENGTH);
+  if (!name) name = "ANON";
+
+  localStorage.setItem(STORAGE_NAME, name);
+  saveScoreToLeaderboard(score, name);
   renderLeaderboard();
 
+  awaitingName = false;
+  showGameOverMessage(isNewBest);
+}
+
+function showGameOverMessage(isNewBest) {
   let infoDiv = document.getElementById("info");
   infoDiv.innerHTML =
     '<div class="info-message ' + (isNewBest ? "newbest" : "gameover") + '">' +
     (isNewBest ? "⭐ NEW BEST — " : "💥 CRASHED — ") +
     "SCORE " + score +
-    '</div>';
+    "</div>";
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 // ================================================
 // LOCAL LEADERBOARD — top 10 all-time
 // ================================================
-function saveScoreToLeaderboard(s) {
+function saveScoreToLeaderboard(s, name) {
   let scores = JSON.parse(localStorage.getItem(STORAGE_SCORES) || "[]");
-  scores.push({ score: s, date: new Date().toISOString().slice(0, 10) });
+  scores.push({ score: s, name: name, date: new Date().toISOString().slice(0, 10) });
   scores.sort((a, b) => b.score - a.score);
   scores = scores.slice(0, 10);
   localStorage.setItem(STORAGE_SCORES, JSON.stringify(scores));
@@ -364,10 +434,12 @@ function renderLeaderboard() {
   let html = '<div class="leaderboard-box"><h2>Top Flights</h2>';
   scores.forEach((s, i) => {
     let rankClass = i === 0 ? "first" : i === 1 ? "second" : i === 2 ? "third" : "";
+    let displayName = s.name ? escapeHtml(s.name) : "ANON";
     html +=
       '<div class="leaderboard-entry">' +
         '<span class="leaderboard-rank ' + rankClass + '">#' + (i + 1) + '</span>' +
-        '<span class="leaderboard-stats"><span>' + s.score + '</span> pts · ' + s.date + '</span>' +
+        '<span class="leaderboard-name">' + displayName + '</span>' +
+        '<span class="leaderboard-stats"><span>' + s.score + '</span> pts</span>' +
       '</div>';
   });
   html += "</div>";
@@ -387,6 +459,12 @@ function loop() {
 // INPUT
 // ================================================
 document.addEventListener("keydown", e => {
+  // Let typing in the name field behave normally (spaces, arrow keys, etc.)
+  let active = document.activeElement;
+  if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
+    return;
+  }
+
   if (e.code === "Space" || e.key === "ArrowUp" || e.key === " ") {
     e.preventDefault();
     flap();
