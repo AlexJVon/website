@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neon Flap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="game-header">
+    <h1 class="game-title">Neon Flap</h1>
+    <p class="game-subtitle">Tap · Flap · Survive the Pipes</p>
+  </div>
+
+  <!-- HUD -->
+  <div class="game-hud">
+    <div class="hud-item">
+      <span class="hud-label">Score</span>
+      <span class="hud-value" id="hud-score">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Best</span>
+      <span class="hud-value" id="hud-best">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Played</span>
+      <span class="hud-value" id="hud-played">0</span>
+    </div>
+  </div>
+
+  <!-- Game Canvas -->
+  <div class="canvas-wrapper">
+    <div class="canvas-frame">
+      <canvas id="gameCanvas" width="400" height="600"></canvas>
+    </div>
+  </div>
+
+  <!-- Info / Game Over Message -->
+  <div id="info"></div>
+
+  <!-- Controls -->
+  <div class="controls-section">
+    <div class="controls-hint">
+      <kbd>Space</kbd> or <kbd>↑</kbd> or tap the canvas to flap
+    </div>
+    <button class="neon-btn" id="playBtn">▶ Play</button>
+  </div>
+
+  <!-- Leaderboard (local) -->
+  <div id="leaderboard"></div>
+
+  <!-- Footer -->
+  <div class="game-footer">
+    <p>Top 10 scores saved locally in your browser.</p>
+    <p style="margin-top: 8px;">
+      <a href="../../">← Back to Portfolio</a>
+    </p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
