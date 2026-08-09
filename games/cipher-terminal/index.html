@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cipher Terminal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="game-header">
+    <h1 class="game-title">CIPHER TERMINAL</h1>
+    <p class="game-subtitle">Breach the Firewall · Type to Survive</p>
+  </div>
+
+  <div class="game-hud">
+    <div class="hud-item">
+      <span class="hud-label">Time</span>
+      <span class="hud-value" id="hud-time">60</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">WPM</span>
+      <span class="hud-value" id="hud-wpm">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Accuracy</span>
+      <span class="hud-value" id="hud-accuracy">100%</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Lines</span>
+      <span class="hud-value" id="hud-lines">0</span>
+    </div>
+  </div>
+
+  <div class="terminal-wrapper">
+    <div class="terminal-frame">
+      <div class="terminal-titlebar">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="terminal-path">root@breach:~$</span>
+      </div>
+
+      <div class="terminal-body">
+        <div class="scrollback" id="scrollback"></div>
+
+        <div class="current-line" id="currentLine"></div>
+        <div class="next-line" id="nextLine"></div>
+
+        <div class="input-row">
+          <span class="prompt-arrow">&gt;</span>
+          <input
+            type="text"
+            id="typeInput"
+            class="type-input"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="terminal-overlay" id="startOverlay">
+        <p class="overlay-line">SYSTEM READY</p>
+        <p class="overlay-sub">Type each line exactly as shown. 60 seconds on the clock.</p>
+        <button class="neon-btn" id="startBtn">INITIATE BREACH</button>
+      </div>
+
+      <div class="terminal-overlay" id="endOverlay" hidden>
+        <p class="overlay-line">CONNECTION CLOSED</p>
+        <div class="end-stats" id="endStats"></div>
+
+        <div class="name-entry" id="nameEntry" hidden>
+          <p class="overlay-sub">New leaderboard entry — enter a callsign:</p>
+          <input type="text" id="nameInput" class="name-input" maxlength="10" autocomplete="off" />
+          <button class="neon-btn" id="submitNameBtn">SAVE</button>
+        </div>
+
+        <button class="neon-btn" id="retryBtn">RUN AGAIN</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="leaderboard"></div>
+
+  <div class="game-footer">
+    <p>Local scores only — top 10 stored in this browser.</p>
+    <p style="margin-top: 8px;">
+      <a href="../../">← Back to Portfolio</a>
+    </p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
