@@ -1,0 +1,390 @@
+/* ============================================
+   PORTFOLIO QUEST — SYNTHWAVE OVERWORLD
+   Matches the main site's neon/grid aesthetic
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --bg-deep:     #06060c;
+  --bg-primary:  #0a0a12;
+  --bg-panel:    #111122;
+  --accent:      #00e5ff;
+  --accent-dim:  rgba(0,229,255,.15);
+  --accent-glow: rgba(0,229,255,.45);
+  --purple:      #9945ff;
+  --purple-dim:  rgba(153,69,255,.15);
+  --green:       #39ff14;
+  --orange:      #ff9100;
+  --text:        #d8d8e8;
+  --text-dim:    #8888a0;
+  --border:      #222240;
+  --font-game:   'Press Start 2P', monospace;
+  --font-mono:   'Share Tech Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: var(--font-mono);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * { position: relative; z-index: 1; }
+
+/* ============================================
+   HEADER
+   ============================================ */
+.game-header {
+  text-align: center;
+  padding: 24px 20px 8px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.game-title {
+  font-family: var(--font-game);
+  font-size: clamp(16px, 4vw, 22px);
+  color: #fff;
+  line-height: 1.8;
+  text-shadow: 0 0 20px var(--accent-glow);
+  letter-spacing: 1px;
+}
+
+.game-subtitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* ============================================
+   HUD
+   ============================================ */
+.game-hud {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px 20px;
+}
+
+.hud-item {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  text-align: center;
+  position: relative;
+  min-width: 140px;
+}
+
+.hud-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--purple));
+}
+
+.hud-label {
+  font-family: var(--font-game);
+  font-size: 8px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.hud-value {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent-dim);
+}
+
+/* ============================================
+   CANVAS
+   ============================================ */
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  padding: 0 20px;
+}
+
+.canvas-frame {
+  position: relative;
+  border: 2px solid var(--accent);
+  box-shadow:
+    inset 0 0 20px rgba(0,0,0,.6),
+    0 0 30px var(--accent-dim),
+    0 0 60px var(--purple-dim);
+  background: var(--bg-primary);
+}
+
+#questCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ============================================
+   INFO / PROMPT
+   ============================================ */
+#info {
+  width: 100%;
+  max-width: 700px;
+  padding: 12px 20px 0;
+  margin-top: 16px;
+  min-height: 0;
+  text-align: center;
+}
+
+#info:empty { display: none; }
+
+.prompt-message {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  padding: 14px 24px;
+  background: var(--bg-panel);
+  border: 1px solid var(--accent-dim);
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent-glow);
+}
+
+.prompt-message kbd {
+  font-family: var(--font-mono);
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  padding: 1px 7px;
+  margin: 0 2px;
+  color: #fff;
+}
+
+/* ============================================
+   CONTROLS
+   ============================================ */
+.controls-section {
+  width: 100%;
+  max-width: 700px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.controls-hint {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.controls-hint kbd {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid #000;
+  color: var(--text);
+  padding: 2px 8px;
+  min-width: 26px;
+  text-align: center;
+  border-radius: 2px;
+}
+
+/* ============================================
+   MOBILE CONTROLS
+   ============================================ */
+.mobile-controls {
+  display: none;
+  width: 100%;
+  max-width: 700px;
+  padding: 16px 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.dpad {
+  display: grid;
+  grid-template-areas:
+    ".  up  ."
+    "left center right"
+    ".  down .";
+  grid-template-columns: 52px 52px 52px;
+  grid-template-rows: 52px 52px 52px;
+  gap: 4px;
+}
+
+.dpad-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background .15s, border-color .15s;
+}
+
+.dpad-btn:active { background: var(--accent-dim); border-color: var(--accent); }
+
+.dpad-btn.up    { grid-area: up; }
+.dpad-btn.down  { grid-area: down; }
+.dpad-btn.left  { grid-area: left; }
+.dpad-btn.right { grid-area: right; }
+
+.dpad-center {
+  grid-area: center;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.interact-btn {
+  font-family: var(--font-game);
+  font-size: 10px;
+  padding: 12px 24px;
+  background: var(--bg-panel);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.interact-btn:active { background: var(--accent-dim); }
+
+@media (hover: none) and (pointer: coarse) {
+  .mobile-controls { display: flex; }
+}
+
+/* ============================================
+   CONNECT PANEL (overlay)
+   ============================================ */
+.connect-panel {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,6,12,.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 20px;
+}
+.connect-panel[hidden] { display: none; }
+
+.connect-panel-inner {
+  background: var(--bg-panel);
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 40px var(--accent-dim);
+  padding: 28px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+}
+
+.connect-panel-inner h2 {
+  font-family: var(--font-game);
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.connect-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.connect-links a {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  transition: border-color .2s, color .2s;
+}
+.connect-links a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.neon-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 8px 20px;
+  background: transparent;
+  border: 1px solid var(--purple);
+  color: var(--purple);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all .2s;
+}
+.neon-btn:hover {
+  background: var(--purple);
+  color: #fff;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.game-footer {
+  width: 100%;
+  max-width: 700px;
+  padding: 24px 20px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: auto;
+}
+.game-footer a { color: var(--accent); text-decoration: none; }
+.game-footer a:hover { color: var(--purple); }
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--accent); }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 500px) {
+  .game-hud { gap: 12px; }
+  .hud-item { min-width: 100px; padding: 8px 12px; }
+}
