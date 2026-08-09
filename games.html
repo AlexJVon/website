@@ -20,7 +20,7 @@ description: Play browser games built by Alexander Vonderau
         <div>
           <h3>Portfolio Quest</h3>
           <p style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin-top: 4px;">
-            Explore · Interactive Portfolio
+            Explore · Interactive Portfolio Navigator
           </p>
         </div>
         <div class="game-controls">
@@ -45,9 +45,50 @@ description: Play browser games built by Alexander Vonderau
         <p style="margin-top: 8px;">
           Use <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> or
           <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> to walk around,
-          and <kbd>E</kbd> to interact with a terminal. Heads up — visiting
-          About, Projects, or Home from inside this game will navigate your
-          whole browser tab there, not just this embed.
+          and <kbd>E</kbd> to interact with a terminal.
+        </p>
+        <p style="margin-top: 8px; color: var(--accent);">
+          This isn't just a maze to wander — it's a working way to browse the site.
+          Each terminal takes you to a different page: <strong>About</strong>,
+          <strong>Projects</strong>, and <strong>Home</strong> will navigate you
+          straight there, and <strong>Connect</strong> opens my social links.
+        </p>
+      </div>
+    </div>
+
+    <div class="game-embed-container reveal" style="margin-top: 48px;">
+      <div class="game-embed-header">
+        <div>
+          <h3>Cipher Terminal</h3>
+          <p style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin-top: 4px;">
+            Typing Speed · Hacker Terminal
+          </p>
+        </div>
+        <div class="game-controls">
+          <button class="btn btn-small" onclick="toggleFullscreen('cipherterminal-frame')">⛶ Fullscreen</button>
+          <a href="{{ '/games/cipher-terminal/' | relative_url }}" target="_blank" class="btn btn-small btn-secondary">
+            Open in New Tab ↗
+          </a>
+        </div>
+      </div>
+
+      <iframe
+        id="cipherterminal-frame"
+        class="game-embed-frame"
+        src="{{ '/games/cipher-terminal/' | relative_url }}"
+        title="Cipher Terminal Game"
+        loading="lazy"
+        allow="fullscreen"
+      ></iframe>
+
+      <div class="game-embed-info">
+        <p><strong>How to play:</strong></p>
+        <p style="margin-top: 8px;">
+          Type each terminal line exactly as shown before the 60-second clock runs out.
+          Speed (WPM) and accuracy both feed your final score.
+        </p>
+        <p style="margin-top: 12px; font-size: 12px; color: var(--text-dim);">
+          Built with vanilla JavaScript — no canvas, just DOM and a lot of keystroke tracking.
         </p>
       </div>
     </div>
