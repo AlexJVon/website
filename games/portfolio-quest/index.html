@@ -1,0 +1,92 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Quest</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Site links injected by Jekyll so this stays in sync with _config.yml -->
+  <script>
+    window.PORTFOLIO_LINKS = {
+      home:     "{{ '/' | relative_url }}",
+      about:    "{{ '/about' | relative_url }}",
+      projects: "{{ '/projects' | relative_url }}",
+      games:    "{{ '/games' | relative_url }}",
+      github:   "{{ site.links.github }}",
+      linkedin: "{{ site.links.linkedin }}",
+      itch:     "{{ site.links.itch }}",
+      email:    "{{ site.links.email }}"
+    };
+  </script>
+
+  <!-- Header -->
+  <div class="game-header">
+    <h1 class="game-title">Portfolio Quest</h1>
+    <p class="game-subtitle">Explore the Grid · Find the Terminals</p>
+  </div>
+
+  <!-- HUD -->
+  <div class="game-hud">
+    <div class="hud-item">
+      <span class="hud-label">Terminals Found</span>
+      <span class="hud-value" id="hud-visited">0 / 4</span>
+    </div>
+  </div>
+
+  <!-- Map Canvas -->
+  <div class="canvas-wrapper">
+    <div class="canvas-frame">
+      <canvas id="questCanvas" width="600" height="360"></canvas>
+    </div>
+  </div>
+
+  <!-- Prompt / Info -->
+  <div id="info"></div>
+
+  <!-- Controls -->
+  <div class="controls-section">
+    <div class="controls-hint">
+      <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or
+      <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> to move ·
+      <kbd>E</kbd> to interact
+    </div>
+  </div>
+
+  <!-- Mobile Controls -->
+  <div class="mobile-controls" id="mobileControls">
+    <div class="dpad">
+      <button class="dpad-btn up" data-dir="N">▲</button>
+      <button class="dpad-btn left" data-dir="W">◄</button>
+      <div class="dpad-center">✦</div>
+      <button class="dpad-btn right" data-dir="E">►</button>
+      <button class="dpad-btn down" data-dir="S">▼</button>
+    </div>
+    <button class="interact-btn" id="mobileInteract">INTERACT</button>
+  </div>
+
+  <!-- Connect Panel (overlay) -->
+  <div class="connect-panel" id="connectPanel" hidden>
+    <div class="connect-panel-inner">
+      <h2>CONNECT.LINK</h2>
+      <div class="connect-links" id="connectLinks"></div>
+      <button class="neon-btn" id="closeConnect">Close</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="game-footer">
+    <p>A tiny overworld — walk up to a terminal and press E.</p>
+    <p style="margin-top: 8px;">
+      <a href="../../">← Back to Portfolio</a>
+    </p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
