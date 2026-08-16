@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Firewall Defense</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="game-header">
+    <h1 class="game-title">FIREWALL DEFENSE</h1>
+    <p class="game-subtitle">Secure the Network · Stop the Breach</p>
+  </div>
+
+  <div class="game-hud">
+    <div class="hud-item">
+      <span class="hud-label">Wave</span>
+      <span class="hud-value" id="hud-wave">0 / 15</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Credits</span>
+      <span class="hud-value" id="hud-currency">0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Core</span>
+      <span class="hud-value" id="hud-core">0 / 0</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Destroyed</span>
+      <span class="hud-value" id="hud-destroyed">0</span>
+    </div>
+  </div>
+
+  <div class="canvas-wrapper">
+    <div class="canvas-frame">
+      <canvas id="towerCanvas" width="560" height="320"></canvas>
+
+      <div class="game-overlay" id="startOverlay">
+        <p class="overlay-line">// NETWORK OPERATIONS</p>
+        <p class="overlay-sub">
+          Place firewalls along the conduit to stop viruses before they reach the core.
+          Click a firewall type, then click an open tile near the path to build.
+          Click a placed tower to upgrade or sell it. Press Deploy Wave when ready —
+          15 waves, boss waves every 5th.
+        </p>
+        <button class="neon-btn" id="startBtn">START DEFENSE</button>
+      </div>
+
+      <div class="game-overlay" id="endOverlay" hidden>
+        <p class="overlay-line" id="endTitle">NETWORK SECURED</p>
+        <div class="end-stats" id="endStats"></div>
+
+        <div class="name-entry" id="nameEntry" hidden>
+          <p class="overlay-sub">New leaderboard entry — enter a callsign:</p>
+          <input type="text" id="nameInput" class="name-input" maxlength="10" autocomplete="off" />
+          <button class="neon-btn" id="submitNameBtn">SAVE</button>
+        </div>
+
+        <button class="neon-btn" id="retryBtn">RUN AGAIN</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tower-panel">
+    <button class="tower-btn" data-type="PACKET_FILTER">
+      <span class="tower-btn-name">Packet Filter</span>
+      <span class="tower-btn-cost">50cr</span>
+      <span class="tower-btn-desc">Fast, low dmg, single target</span>
+    </button>
+    <button class="tower-btn" data-type="DEEP_SCAN">
+      <span class="tower-btn-name">Deep Scan</span>
+      <span class="tower-btn-cost">90cr</span>
+      <span class="tower-btn-desc">Splash damage, mid rate</span>
+    </button>
+    <button class="tower-btn" data-type="KILL_SWITCH">
+      <span class="tower-btn-name">Kill Switch</span>
+      <span class="tower-btn-cost">130cr</span>
+      <span class="tower-btn-desc">Heavy single-target burst</span>
+    </button>
+  </div>
+
+  <div class="action-row">
+    <button class="neon-btn" id="deployBtn">DEPLOY WAVE</button>
+    <button class="neon-btn secondary" id="speedBtn">1X SPEED</button>
+  </div>
+
+  <div id="waveMessage"></div>
+
+  <div class="selected-panel" id="selectedPanel" hidden>
+    <div class="selected-panel-inner">
+      <div>
+        <span class="sel-name" id="selName"></span>
+        <span class="sel-stats" id="selStats"></span>
+      </div>
+      <div class="sel-actions">
+        <button class="neon-btn small" id="upgradeBtn">UPGRADE</button>
+        <button class="neon-btn small danger" id="sellBtn">SELL</button>
+        <button class="neon-btn small secondary" id="closeSelBtn">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="leaderboard"></div>
+
+  <div class="game-footer">
+    <p>Local scores only — top 10 stored in this browser.</p>
+    <p style="margin-top: 8px;">
+      <a href="../../">← Back to Portfolio</a>
+    </p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
