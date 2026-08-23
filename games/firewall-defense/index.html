@@ -42,7 +42,7 @@
           Place firewalls along the conduit to stop viruses before they reach the core.
           Click a firewall type, then click an open tile near the path to build.
           Click a placed tower to upgrade or sell it. Press Deploy Wave when ready —
-          15 waves, boss waves every 5th.
+          15 waves, boss waves every 5th. The network layout is randomized every run.
         </p>
         <button class="neon-btn" id="startBtn">START DEFENSE</button>
       </div>
@@ -64,19 +64,28 @@
 
   <div class="tower-panel">
     <button class="tower-btn" data-type="PACKET_FILTER">
-      <span class="tower-btn-name">Packet Filter</span>
-      <span class="tower-btn-cost">50cr</span>
-      <span class="tower-btn-desc">Fast, low dmg, single target</span>
+      <span class="tower-icon"><span class="tower-icon-core"></span></span>
+      <span class="tower-btn-text">
+        <span class="tower-btn-name">Packet Filter</span>
+        <span class="tower-btn-cost">50cr</span>
+        <span class="tower-btn-desc">Fast, low dmg, single target</span>
+      </span>
     </button>
     <button class="tower-btn" data-type="DEEP_SCAN">
-      <span class="tower-btn-name">Deep Scan</span>
-      <span class="tower-btn-cost">90cr</span>
-      <span class="tower-btn-desc">Splash damage, mid rate</span>
+      <span class="tower-icon"><span class="tower-icon-core"></span></span>
+      <span class="tower-btn-text">
+        <span class="tower-btn-name">Deep Scan</span>
+        <span class="tower-btn-cost">90cr</span>
+        <span class="tower-btn-desc">Splash damage, mid rate</span>
+      </span>
     </button>
     <button class="tower-btn" data-type="KILL_SWITCH">
-      <span class="tower-btn-name">Kill Switch</span>
-      <span class="tower-btn-cost">130cr</span>
-      <span class="tower-btn-desc">Heavy single-target burst</span>
+      <span class="tower-icon"><span class="tower-icon-core"></span></span>
+      <span class="tower-btn-text">
+        <span class="tower-btn-name">Kill Switch</span>
+        <span class="tower-btn-cost">130cr</span>
+        <span class="tower-btn-desc">Heavy single-target burst</span>
+      </span>
     </button>
   </div>
 
