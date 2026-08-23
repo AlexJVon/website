@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neon Parkour</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="game-header">
+    <h1 class="game-title">NEON PARKOUR</h1>
+    <p class="game-subtitle">Grapple · Dash · Survive the Grid</p>
+  </div>
+
+  <div class="game-hud">
+    <div class="hud-item">
+      <span class="hud-label">Distance</span>
+      <span class="hud-value" id="hud-distance">0m</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Difficulty</span>
+      <span class="hud-value" id="hud-difficulty">NORMAL</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Dash</span>
+      <span class="hud-value" id="hud-dash">READY</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Grapple</span>
+      <span class="hud-value" id="hud-grapple">—</span>
+    </div>
+  </div>
+
+  <div class="canvas-wrapper">
+    <div class="canvas-frame">
+      <canvas id="runnerCanvas" width="640" height="360"></canvas>
+
+      <div class="game-overlay" id="startOverlay">
+        <p class="overlay-line">// SIGNAL RUNNER</p>
+        <p class="overlay-sub">
+          <kbd>Space</kbd> or <kbd>↑</kbd> to jump ·
+          <kbd>Shift</kbd> to dash ·
+          <kbd>E</kbd> to grapple when a node lights up ahead.
+          Gaps marked with a glowing anchor are too wide to jump or dash —
+          you'll need the grapple.
+        </p>
+
+        <div class="difficulty-picker">
+          <button class="diff-btn" data-diff="EASY">EASY</button>
+          <button class="diff-btn active" data-diff="NORMAL">NORMAL</button>
+          <button class="diff-btn" data-diff="HARD">HARD</button>
+        </div>
+
+        <button class="neon-btn" id="startBtn">START RUN</button>
+      </div>
+
+      <div class="game-overlay" id="endOverlay" hidden>
+        <p class="overlay-line">RUN TERMINATED</p>
+        <div class="end-stats" id="endStats"></div>
+
+        <div class="name-entry" id="nameEntry" hidden>
+          <p class="overlay-sub">New leaderboard entry — enter a callsign:</p>
+          <input type="text" id="nameInput" class="name-input" maxlength="10" autocomplete="off" />
+          <button class="neon-btn" id="submitNameBtn">SAVE</button>
+        </div>
+
+        <div class="end-actions">
+          <button class="neon-btn" id="retryBtn">RUN AGAIN</button>
+          <button class="neon-btn secondary" id="changeDiffBtn">CHANGE DIFFICULTY</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-controls" id="mobileControls">
+    <button class="mobile-btn dash" id="mobileDash">DASH</button>
+    <button class="mobile-btn jump" id="mobileJump">JUMP</button>
+    <button class="mobile-btn grapple" id="mobileGrapple">GRAPPLE</button>
+  </div>
+
+  <div id="leaderboard"></div>
+
+  <div class="game-footer">
+    <p>Local scores only — top 10 stored in this browser.</p>
+    <p style="margin-top: 8px;">
+      <a href="../../">← Back to Portfolio</a>
+    </p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
