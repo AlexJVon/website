@@ -1,28 +1,74 @@
 console.log("Firewall Defense loaded");
 
 // ================================================
-// GRID / PATH CONFIG
+// GRID CONFIG
 // ================================================
 const COLS = 14, ROWS = 8, TILE = 40;
 const TOTAL_WAVES = 15;
 const MAX_LEVEL = 3;
-
-// Waypoints in tile coords; -1 and 15 are off-canvas spawn/exit markers
-const PATH_WAYPOINTS = [
-  { c: -1, r: 1 },
-  { c: 12, r: 1 },
-  { c: 12, r: 3 },
-  { c: 1,  r: 3 },
-  { c: 1,  r: 5 },
-  { c: 13, r: 5 },
-  { c: 15, r: 5 }
-];
+const MIN_ROW_GAP = 2;
+const MIN_SEGMENT_LEN = 4;
 
 function tileCenterPx(c, r) {
   return { x: c * TILE + TILE / 2, y: r * TILE + TILE / 2 };
 }
 
-const PATH_PX = PATH_WAYPOINTS.map(function (wp) { return tileCenterPx(wp.c, wp.r); });
+// ================================================
+// PROCEDURAL PATH GENERATION
+// Builds a serpentine route: spawn (off-grid left) through
+// 3–4 randomized horizontal lanes to an exit (off-grid right).
+// ================================================
+function generateLaneRows(numLanes) {
+  const rows = [];
+  const bandHeight = ROWS / numLanes;
+
+  for (let i = 0; i < numLanes; i++) {
+    const bandStart = i * bandHeight;
+    const center = bandStart + bandHeight / 2;
+    const jitter = (Math.random() - 0.5) * bandHeight * 0.6;
+    let row = Math.round(center + jitter);
+    row = Math.max(0, Math.min(ROWS - 1, row));
+    rows.push(row);
+  }
+
+  // Guarantee minimum vertical spacing so there's always a buildable
+  // row between lanes, even after jitter.
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i] < rows[i - 1] + MIN_ROW_GAP) {
+      rows[i] = Math.min(ROWS - 1, rows[i - 1] + MIN_ROW_GAP);
+    }
+  }
+
+  return rows;
+}
+
+function generatePath() {
+  const numLanes = 3 + Math.floor(Math.random() * 2); // 3 or 4 lanes
+  const laneRows = generateLaneRows(numLanes);
+  const waypoints = [{ c: -1, r: laneRows[0] }];
+  let currentCol = -1;
+
+  for (let i = 0; i < numLanes; i++) {
+    let turnCol;
+
+    if (i === numLanes - 1) {
+      turnCol = COLS + 1; // last lane always exits off the right edge
+    } else {
+      const min = 1, max = COLS - 2;
+      let attempts = 0;
+      do {
+        turnCol = min + Math.floor(Math.random() * (max - min + 1));
+        attempts++;
+      } while (Math.abs(turnCol - currentCol) < MIN_SEGMENT_LEN && attempts < 20);
+    }
+
+    waypoints.push({ c: turnCol, r: laneRows[i] });
+    if (i < numLanes - 1) waypoints.push({ c: turnCol, r: laneRows[i + 1] });
+    currentCol = turnCol;
+  }
+
+  return waypoints;
+}
 
 function buildPathTiles(waypoints) {
   const tiles = new Set();
@@ -44,7 +90,14 @@ function buildPathTiles(waypoints) {
   return tiles;
 }
 
-const pathTiles = buildPathTiles(PATH_WAYPOINTS);
+let PATH_PX = [];
+let pathTiles = new Set();
+
+function regeneratePath() {
+  const waypoints = generatePath();
+  PATH_PX = waypoints.map(function (wp) { return tileCenterPx(wp.c, wp.r); });
+  pathTiles = buildPathTiles(waypoints);
+}
 
 // ================================================
 // TOWER / ENEMY DEFINITIONS
@@ -511,13 +564,25 @@ function draw() {
 // ================================================
 // HUD
 // ================================================
-function updateCurrencyHUD() { document.getElementById("hud-currency").textContent = currency; }
+function updateCurrencyHUD() {
+  document.getElementById("hud-currency").textContent = currency;
+  updateTowerButtonStates();
+}
 function updateCoreHUD() { document.getElementById("hud-core").textContent = coreIntegrity + " / " + maxCoreIntegrity; }
 function updateWaveHUD() { document.getElementById("hud-wave").textContent = waveNumber + " / " + TOTAL_WAVES; }
 function updateDestroyedHUD() { document.getElementById("hud-destroyed").textContent = destroyedCount; }
 
 function showWaveMessage(msg) { document.getElementById("waveMessage").textContent = msg; }
 function clearWaveMessage() { document.getElementById("waveMessage").textContent = ""; }
+
+function updateTowerButtonStates() {
+  document.querySelectorAll(".tower-btn").forEach(function (btn) {
+    const type = btn.getAttribute("data-type");
+    const cfg = TOWER_TYPES[type];
+    const affordable = currency >= cfg.cost;
+    btn.classList.toggle("unaffordable", !affordable);
+  });
+}
 
 // ================================================
 // SELECTED TOWER PANEL
@@ -580,6 +645,7 @@ canvas.addEventListener("click", function (e) {
 
 document.querySelectorAll(".tower-btn").forEach(function (btn) {
   btn.addEventListener("click", function () {
+    if (btn.classList.contains("unaffordable")) return;
     const type = btn.getAttribute("data-type");
     selectedTowerType = selectedTowerType === type ? null : type;
     selectedTower = null;
@@ -665,6 +731,8 @@ document.getElementById("startBtn").addEventListener("click", startGame);
 document.getElementById("retryBtn").addEventListener("click", startGame);
 
 function startGame() {
+  regeneratePath();
+
   gameActive = true;
   currency = 180;
   coreIntegrity = 25;
@@ -735,5 +803,6 @@ function loop(ts) {
   requestAnimationFrame(loop);
 }
 
+regeneratePath();
 requestAnimationFrame(loop);
 displayLeaderboard();
