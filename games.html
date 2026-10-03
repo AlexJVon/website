@@ -236,17 +236,21 @@ description: Play browser games built by Alexander Vonderau
     <div class="game-embed-container reveal" style="margin-top: 48px;">
       <div class="game-embed-header">
         <div>
-          <h3>3D Godot Game — Web Demo</h3>
+          <h3>Labyrinth — Web Demo</h3>
           <p style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin-top: 4px;">
-            Coming Soon · 3D · Godot Export
+            First-Person Horror · 3D · Godot 4 · Floors 1–5
           </p>
         </div>
         <div class="game-controls">
-          <span class="btn btn-small" style="opacity: .4; pointer-events: none;">Not Yet Available</span>
+          <button class="btn btn-small" onclick="loadLabyrinth3D(); toggleFullscreen('labyrinth3d-frame')">⛶ Fullscreen</button>
+          <a href="{{ '/games/labyrinth-3d/' | relative_url }}" target="_blank" class="btn btn-small btn-secondary">
+            Open in New Tab ↗
+          </a>
         </div>
       </div>
 
-      <div style="
+      <!-- Click-to-load: the game is a ~110 MB download, so it only starts when asked. -->
+      <div id="labyrinth3d-poster" style="
         width: 100%;
         aspect-ratio: 16 / 9;
         background: var(--bg-primary);
@@ -259,23 +263,57 @@ description: Play browser games built by Alexander Vonderau
         border-bottom: 1px solid var(--border);
       ">
         <span style="font-family: var(--font-game); font-size: 10px; color: var(--text-dim);">
-          // LOADING QUEST...
+          // THE WAY DOWN
         </span>
-        <span style="font-family: var(--font-mono); font-size: 13px; color: var(--orange);">
-          This game is still in development.
+        <span style="font-family: var(--font-mono); font-size: 13px; color: var(--orange); text-align: center; padding: 0 16px;">
+          A maze that rebuilds itself every floor — and things that hunt in the dark.
         </span>
-        <span style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);">
-          A playable web export will appear here when ready.
+        <button class="btn" onclick="loadLabyrinth3D()">▶ Enter the Labyrinth</button>
+        <span style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); text-align: center; padding: 0 16px;">
+          Desktop browser · keyboard &amp; mouse · ~110 MB download
         </span>
       </div>
 
+      <iframe
+        id="labyrinth3d-frame"
+        class="game-embed-frame"
+        data-src="{{ '/games/labyrinth-3d/' | relative_url }}"
+        title="Labyrinth 3D Web Demo"
+        allow="fullscreen; autoplay"
+        style="display: none;"
+      ></iframe>
+
       <div class="game-embed-info">
-        <p style="color: var(--text-dim);">
-          Godot Engine can export games to HTML5/WebGL, which means you'll be able to
-          play directly in the browser. Check back for updates.
+        <p><strong>How to play:</strong></p>
+        <p style="margin-top: 8px;">
+          <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> to move, mouse to look,
+          <kbd>Space</kbd> to jump and climb, <kbd>Shift</kbd> to sprint, <kbd>Ctrl</kbd> to crouch,
+          <kbd>C</kbd> to dodge-roll. <kbd>E</kbd> interacts, <kbd>F</kbd> uses the held item,
+          <kbd>G</kbd> lights a flare, <kbd>Tab</kbd> opens your map, <kbd>I</kbd> your inventory.
+          Click inside the game to capture the mouse; <kbd>Esc</kbd> pauses.
+        </p>
+        <p style="margin-top: 8px; color: var(--accent);">
+          Descend through five procedurally generated floors. Sprinting is loud — some of
+          what lives down here hunts by sound. Some of it only moves when you aren't looking.
+        </p>
+        <p style="margin-top: 12px; font-size: 12px; color: var(--text-dim);">
+          Desktop browsers only (Chrome, Edge or Firefox). The full game has more floors,
+          bosses and co-op.
         </p>
       </div>
     </div>
+
+    <script>
+      function loadLabyrinth3D() {
+        var frame = document.getElementById('labyrinth3d-frame');
+        if (!frame || frame.getAttribute('src')) return;
+        frame.setAttribute('src', frame.dataset.src);
+        frame.style.display = 'block';
+        var poster = document.getElementById('labyrinth3d-poster');
+        if (poster) poster.remove();
+        frame.focus();
+      }
+    </script>
 
     <div style="margin-top: 64px;">
       <p class="section-label reveal">// tips</p>
